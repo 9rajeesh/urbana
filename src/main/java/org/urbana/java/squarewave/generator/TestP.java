@@ -135,8 +135,8 @@ public class TestP {
 		long a7 = squareWave(16777421,time);
 		long a8 = squareWave(16777441,time);
 		long a9 = squareWave(16777447,time);
-		long a10 = squareWave(16777469,time);
-		long a11 = squareWave(16777499.0,time);
+		long a10 =squareWave(16777469,time);
+		long a11 =squareWave(16777499.0,time);
 		
 		//
 		//long a14 = squareWave(101503.0,time);
@@ -286,7 +286,7 @@ public static void main2(String[] args){
 		
 	}
 	
-	public static long squareWave(double period, double time){
+	public static long squareWave(double period, double time) {
 		
 		double a = time/period;
 		

@@ -80,16 +80,18 @@ public class TestP1 {
 	private static void preparePeriodList(double... periodArray) {
 
 		for (Double period : periodArray) {
-			double t = 1;
 
-			while (period * t < 16384 * 16384.0) {
-				double pp = period * t;
+			double h = 1;
+			double t = 1.0;
 
-				if (!periodList.contains(pp)) {
-				periodList.add(pp);
+			while (t < 16384 * 16384.0) {
+				t = (period / 2) * h;
+
+				if (!periodList.contains(t)) {
+					periodList.add(t);
 				}
-				
-				t = t + 1.0;
+
+				h = h + 1.0;
 			}
 		}
 	}
@@ -104,10 +106,10 @@ public class TestP1 {
 		
 		//double[] a = new double[]{727.0, 733.0, 739.0, 743.0, 751.0, 757.0, 761.0, 769.0, 773.0, 787.0, 797.0, 809.0, 811.0, 821.0, 823.0, 827.0};
 		
-		double[] a = new double[]{  8221,    
-				8237,      8269,      8291,      8311,      8353,    
-				8377,      8419,      8431,      8461,      8513,    
-				8537,      8563  , 8597       };
+		double[] a = new double[]{  16411,  16417,  16421,  16427,  16433,
+				                    16447,  16451,  16453,  16477,  16481, 
+				                    16487, 16493,   16519,  16529 
+				};
 		
 		preparePeriodList(a);
 				
@@ -132,7 +134,7 @@ public class TestP1 {
 		long a10= squareWave(a[10],time);
 		long a11= squareWave(a[11],time);
 		long a12= squareWave(a[12],time);
-	   long a13 = squareWave(a[13],time);
+	    long a13 = squareWave(a[13],time);
 		//long a14 = squareWave(a[14],time);
 		
 		//long a16 = squareWave(a[16],time);
@@ -144,20 +146,22 @@ public class TestP1 {
 				+ a7*128 
 				+ a8*256 +a9*512
 		       +  a10*1024
-			     +a11*2048
+			    +a11*2048
 				+a12*4096
 			    +a13*8192;
 				//+ a14*8192*2
 				//+ a15*8192*4+
 				//a16*8192*8;
 		//aMap.put( value,"true");
-		aList.add(value);
 		
+		if(!aList.contains(value)){
+		aList.add(value);
+		}
 		
 		 }
 		}
 		
-		aList.forEach((value) ->System.out.println(value));
+		//aList.forEach((value) ->System.out.println(value));
 		int size = aList.size();
 		System.out.println("Size is:"+size);
 		
@@ -273,7 +277,13 @@ public static void main2(String[] args){
 		
 		}
 		
-		aMap.forEach((k,v) ->System.out.println(k));
+		aMap.forEach((k,v) ->{
+			
+			if(k.equals("A")){
+				
+			  }
+		     }
+         );
 		int size = aMap.size();
 		System.out.println("Size is:"+size);
 		
@@ -292,7 +302,7 @@ public static void main2(String[] args){
 		}
 		
 		else{
-	return 1;
+	    return 1;
 		}
 	}
 	
