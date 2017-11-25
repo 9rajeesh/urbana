@@ -26,9 +26,9 @@ public class Harmonics {
 	
 	
 	//5
-	terms.addAll(scale(termPower(baseTerms,1),5*0.2546479));
-	terms.addAll(scale(termPower(baseTerms,3),-20*0.2546479));
-	terms.addAll(scale(termPower(baseTerms,5),16*0.2546479));
+	terms.addAll(scale(termPower(baseTerms1,1),5*0.2546479));
+	terms.addAll(scale(termPower(baseTerms1,3),-20*0.2546479));
+	terms.addAll(scale(termPower(baseTerms1,5),16*0.2546479));
 	
 	//terms = ApplyCriteria.mergeLikeTerms(terms);
 	

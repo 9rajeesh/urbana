@@ -167,23 +167,23 @@ public class ApplyCriteria {
     	wv.createSquareWaves();
     	
     	
-    	List<Term> termsa1 = wv.termListMap.get("a1");
+    	List<Term> termsa1 = wv.termListMap.get("a2");
     	System.out.println("Terms:"+termsa1.size());
     	
     	
-    	for(Term term:wv.fetchOnlyRelevent(wv.termListMap.get("a1"))){
-    		System.out.println("Terma1:"+term)	;
-    	}
+    	//for(Term term:wv.fetchOnlyRelevent(wv.termListMap.get("a2"))){
+    		//System.out.println("Term a2:"+term)	;
+    	//}
     	
-    	for(Term term: wv.fetchOnlyRelevent(wv.termListMap.get("a0"))){
-    		System.out.println("Terma0:"+term)	;
-    	}
+    	//for(Term term: wv.fetchOnlyRelevent(wv.termListMap.get("a20"))){
+    		//System.out.println("Term a20:"+term)	;
+    	//}
     	
-    	BigDecimal h = evaluate(wv.termListMap.get("a1"),3.92699);
-    	System.out.println("Value a1 is:"+h);
+    	BigDecimal h = evaluate(wv.termListMap.get("a2"),new BigDecimal("1522.10164066"));
+    	System.out.println("Value a2 is:"+h);
     	
-    	BigDecimal h1 = evaluate(wv.termListMap.get("a0"),3.92699);
-    	System.out.println("Value a0 is:"+h1);
+    	BigDecimal h1 = evaluate(wv.termListMap.get("a20"),new BigDecimal("1522.10164066"));
+    	System.out.println("Value a20 is:"+h1);
     	
     	
     	/*for(Expression exp:criteria.getExpList()){
@@ -200,7 +200,7 @@ public class ApplyCriteria {
     	  */
     }
     
-    public static BigDecimal evaluate(List<Term> terms,double x){
+    public static BigDecimal evaluate(List<Term> terms,BigDecimal x){
     	
     	BigDecimal sum = new BigDecimal("0");
     	for(Term term:terms){

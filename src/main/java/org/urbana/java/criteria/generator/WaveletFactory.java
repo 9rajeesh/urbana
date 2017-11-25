@@ -19,9 +19,9 @@ public class WaveletFactory {
 	public static double PI = 3.14159265359;
 	
 	public static int SIZE = 2;
-	public static int N = 40;
-	public static final BigDecimal L = new BigDecimal("2.5");
-	public static  BigDecimal delta = new BigDecimal("0.025");
+	public static int N = 20;
+	public static final BigDecimal L = new BigDecimal("51");
+	public static  BigDecimal delta = new BigDecimal("1");
 	
 	static Integer maxXpower = 0;
 	static Map<String, List<Term>> termListMap = new HashMap<String, List<Term>> ();
@@ -276,7 +276,7 @@ public class WaveletFactory {
 	 
 	private static BigDecimal inverse(BigDecimal value1) {
 		BigDecimal value = null;
-		int power = 0;
+		long power = 0;
 		String a = value1.toPlainString();
 		String b = "";
 		
@@ -300,7 +300,7 @@ public class WaveletFactory {
 	}
 	
 	public List<Term> fetchOnlyRelevent(List<Term> termList){
-		
+		/*
 		List<Term> terms = new ArrayList<Term>();
 		
 		for(Term term:termList ){
@@ -313,7 +313,8 @@ public class WaveletFactory {
 				 terms.add(term);
 				}
 		}
-		return terms;
+		*/
+		return termList;
 	}
 	
 	public void createSquareWaves(){
@@ -321,8 +322,8 @@ public class WaveletFactory {
 		//termListMap.put("a0", fetchOnlyRelevent(lMap.get("sin1")));
 		//termListMap.put("a1", fetchOnlyRelevent(lMap.get("sin40")));
 		
-		termListMap.put("a0",Harmonics.generateHarmonics(1, fetchOnlyRelevent(lMap.get("sin1"))));
-		termListMap.put("a1",Harmonics.generateHarmonics(1, fetchOnlyRelevent(lMap.get("sin40"))));
+		termListMap.put("a2", Harmonics.generateHarmonics(1, fetchOnlyRelevent(lMap.get("sin2"))));
+		termListMap.put("a20",Harmonics.generateHarmonics(1, fetchOnlyRelevent(lMap.get("sin20"))));
 	}
 
 	public void createAllWaveletsMap() {
@@ -344,7 +345,7 @@ public class WaveletFactory {
 			term.setN(1);
 			TaylorSeries taylorSeries = new TaylorSeries();
 			taylorSeries.setCaching(false);
-			List<Term> termList = taylorSeries.expandTerm(term, 5, delta);
+			List<Term> termList = taylorSeries.expandTerm(term, 8, delta);
 			
 			
 			for(Term termA:termList){
@@ -369,7 +370,7 @@ public class WaveletFactory {
 			term1.setN(1);
 			TaylorSeries taylorSeries1 = new TaylorSeries();
 			taylorSeries1.setCaching(false);
-			List<Term> termList1 = taylorSeries1.expandTerm(term1, 5, delta);
+			List<Term> termList1 = taylorSeries1.expandTerm(term1, 8, delta);
 			
 			for(Term termB:termList1){
 				   for(int k=0;k<Math.abs(termB.getLpower());k++){
