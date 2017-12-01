@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.urbana.java.criteria.generator.WaveletFactory;
 
-public class Term {
+public class Term implements Comparable<Term> {
 
 	
-	public static int  precision = 20;
+	public static int  precision = 5;
 	private BigDecimal sine;
 	private BigDecimal cosine;
 	private Integer npower ;
@@ -309,5 +309,22 @@ public class Term {
 
         return value;
 	}
+	
+	@Override
+	public int compareTo(Term arg0) {
+	
+		if(arg0==null){
+			return 0;
+		}
+		else if(Math.abs(this.xpower)>Math.abs(arg0.xpower)){
+			return 1;
+		}
+		else if(Math.abs(this.xpower)<=Math.abs(arg0.xpower)){
+			return -1;
+		}
+		return 0;
+	}
+	
+	
 	
 }

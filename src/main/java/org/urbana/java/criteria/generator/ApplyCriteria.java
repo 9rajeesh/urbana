@@ -3,6 +3,7 @@ package org.urbana.java.criteria.generator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,7 +143,7 @@ public class ApplyCriteria {
 			else {
 			term1.setCosine(term1.getCosine().add(term.getCosine()));
 			}
-	   	}
+	   	 }
 		}	
 
 		List<Term> terms = new ArrayList<Term>(termMaps.values());
@@ -172,13 +173,14 @@ public class ApplyCriteria {
     	
     	
     	//for(Term term:wv.fetchOnlyRelevent(wv.termListMap.get("a2"))){
-    		//System.out.println("Term a2:"+term)	;
+    	//System.out.println("Term a2:"+term)	;
     	//}
     	
-    	//for(Term term: wv.fetchOnlyRelevent(wv.termListMap.get("a20"))){
-    		//System.out.println("Term a20:"+term)	;
-    	//}
     	
+    	 Collections.sort(wv.termListMap.get("a20"));
+    	for(Term term: wv.fetchOnlyRelevent(wv.termListMap.get("a20"))){
+     	System.out.println("Term a20:"+term);
+     	}
     	BigDecimal h = evaluate(wv.termListMap.get("a2"),new BigDecimal("1522.10164066"));
     	System.out.println("Value a2 is:"+h);
     	
