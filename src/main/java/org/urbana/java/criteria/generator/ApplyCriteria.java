@@ -17,7 +17,9 @@ public class ApplyCriteria {
 	Criteria criteria;
 	static int max = 0;
 	static List<Term> listOfTerms = new ArrayList<Term>();
-		
+	static Double smallest = 10.0;
+	static Double smallestAtValue = 10.0;
+	
 	public static List<Term> scale(List<Term> termList){
 		 termList.stream().forEach( term ->{
 			
@@ -129,7 +131,7 @@ public class ApplyCriteria {
 			}
 
 			else {
-			term1.setSine(term1.getSine().add(term.getSine()));
+			term1.setSine(term1.getSine().add(WaveletFactory.normalize(term.getSine())));
 			}
 	   	}
 			
@@ -141,7 +143,7 @@ public class ApplyCriteria {
 			}
 
 			else {
-			term1.setCosine(term1.getCosine().add(term.getCosine()));
+			term1.setCosine(term1.getCosine().add(WaveletFactory.normalize(term.getCosine())));
 			}
 	   	 }
 		}	
@@ -168,8 +170,8 @@ public class ApplyCriteria {
     	wv.createSquareWaves();
     	
     	
-    	List<Term> termsa1 = wv.termListMap.get("a2");
-    	System.out.println("Terms:"+termsa1.size());
+    	//List<Term> termsa1 = wv.termListMap.get("a5");
+    	//System.out.println("Terms:"+termsa1.size());
     	
     	
     	//for(Term term:wv.fetchOnlyRelevent(wv.termListMap.get("a2"))){
@@ -177,15 +179,65 @@ public class ApplyCriteria {
     	//}
     	
     	
-    	 Collections.sort(wv.termListMap.get("a20"));
-    	for(Term term: wv.fetchOnlyRelevent(wv.termListMap.get("a20"))){
-     	System.out.println("Term a20:"+term);
-     	}
-    	BigDecimal h = evaluate(wv.termListMap.get("a2"),new BigDecimal("1522.10164066"));
-    	System.out.println("Value a2 is:"+h);
+    	 //Collections.sort(wv.termListMap.get("a5"));
     	
-    	BigDecimal h1 = evaluate(wv.termListMap.get("a20"),new BigDecimal("1522.10164066"));
-    	System.out.println("Value a20 is:"+h1);
+    	//printTerms(wv.termListMap.get("a20"));
+    	
+    	
+    	//BigDecimal h = evaluate(wv.termListMap.get("a2"),new BigDecimal("2003"));
+    	//sSystem.out.println("Value a2 is:"+h);
+    	BigDecimal value = new BigDecimal("10");
+    	
+    	for(int i=0;i<100;i++){
+    	value = value.add(new BigDecimal("20"));
+    	
+    	BigDecimal h1 = evaluate(wv.termListMap.get("a5"),value);
+    	System.out.println("Value a5 at "+value+" is:"+h1);
+    	
+    	BigDecimal h2 = evaluate(wv.termListMap.get("a10"),value);
+    	System.out.println("Value a10 at "+value+" is:"+h2);
+    	
+    	BigDecimal h3 = evaluate(wv.termListMap.get("a15"),value);
+    	System.out.println("Value a15 at "+value+" is:"+h3);
+    	
+    	BigDecimal h4 = evaluate(wv.termListMap.get("a20"),value);
+    	System.out.println("Value a20 at "+value+" is:"+h4);
+    	
+    	BigDecimal h5 = evaluate(wv.termListMap.get("a8"),value);
+    	System.out.println("Value a8 at "+value+" is:"+h5);
+    	
+    	printboolean(h1,h2,h3,h4,h5);
+    	
+    	
+    	
+    	BigDecimal a0 = new BigDecimal("1").subtract(new BigDecimal("1").subtract(h1).divide(new BigDecimal(2),RoundingMode.CEILING));
+    	BigDecimal a1 = new BigDecimal("1").subtract(new BigDecimal("1").subtract(h2).divide(new BigDecimal(2),RoundingMode.CEILING));
+    	BigDecimal b0 = new BigDecimal("1").subtract(new BigDecimal("1").subtract(h4).divide(new BigDecimal(2),RoundingMode.CEILING));
+    	BigDecimal b1 = new BigDecimal("1").subtract(new BigDecimal("1").subtract(h5).divide(new BigDecimal(2),RoundingMode.CEILING));
+    	
+    	BigDecimal sum1 = a0.multiply(b0);
+    	BigDecimal sum2 = new BigDecimal("2").multiply(a0.multiply(b1).add(a1.multiply(b0)));
+     	BigDecimal sum3 = new BigDecimal("4").multiply(a1.multiply(b1));
+     	
+     	BigDecimal sum = sum1.add(sum2).add(sum3);
+     	
+     	Double v = Math.abs(sum.doubleValue() - 6);
+     	if(v<smallest){
+     		smallest=v;
+     		smallestAtValue=value.doubleValue();
+     	}
+    	
+    	System.out.println("Value a0 is:"+a0);
+    	System.out.println("Value a1 is:"+a1);
+    	System.out.println("Value b0 is:"+b0);
+    	System.out.println("Value b1 is:"+b1);
+    	System.out.println("Sum at:"+value+"is:"+sum);
+    	}
+    	System.out.println("Smallest is:"+smallest);
+    	System.out.println("Smallest value is:"+smallestAtValue);
+    	comb.stream().
+    	filter( s-> !s.contains("E")).collect(Collectors.toSet()).forEach(s->System.out.println(s));;
+    	
     	
     	
     	/*for(Expression exp:criteria.getExpList()){
@@ -202,7 +254,70 @@ public class ApplyCriteria {
     	  */
     }
     
-    public static BigDecimal evaluate(List<Term> terms,BigDecimal x){
+    static List<String> comb = new ArrayList<String> ();
+    
+    private static void printboolean(BigDecimal... harry) {
+    	
+    	String s= "";
+    	for(BigDecimal h:harry){
+    		
+    		double a = h.doubleValue();
+    		if(a<-0.8 && a>-1.2){
+    			s= s+"0";
+    		}
+    		else if(a>0.8 && a<1.2){
+    			//System.out.print("1");
+    			s= s+"1";
+    		}
+    		else{
+    			//System.out.print("E");
+    			s= s+"E";
+    		}
+    		
+    	}
+    	comb.add(s);	
+	}
+
+
+
+
+
+	private void printTerms(List<Term> list) {
+    	 	
+    	
+    	for(Term term:list){
+    	BigDecimal h1 = evaluate(term,new BigDecimal("2000"));
+    	
+    	h1=h1.multiply(h1);
+		if(h1.compareTo(new BigDecimal("0.01"))>0){
+		System.out.println("Term a20:" + term);
+			
+		}
+	 }
+    }
+
+
+
+
+
+	private BigDecimal evaluate(Term term, BigDecimal x) {
+	
+		if(term.getSine()!=null){
+    	return (term.getSine().multiply(TaylorSeries.power(x,term.getXpower())));
+		}
+		
+		if(term.getCosine()!=null){
+    	return (term.getCosine().multiply(TaylorSeries.power(x,term.getXpower())));
+		}
+		
+		return null;
+	}
+
+
+
+
+
+	public static BigDecimal evaluate(List<Term> terms,BigDecimal x){
     	
     	BigDecimal sum = new BigDecimal("0");
     	for(Term term:terms){
@@ -236,12 +351,16 @@ public class ApplyCriteria {
     
     
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws InterruptedException{
+    	
+    
+    	//Thread.sleep(30000);
     	
     	Criteria criteria = new Criteria ();
     	ApplyCriteria applyCriteria = new ApplyCriteria();
     	applyCriteria.applyCiteria(criteria);
     	computeDegree();
+    	
         }
     
     

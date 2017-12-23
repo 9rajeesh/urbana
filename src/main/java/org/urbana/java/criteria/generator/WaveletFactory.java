@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.urbana.java.taylor.expansion.TaylorSeries;
@@ -101,7 +103,7 @@ public class WaveletFactory {
 		return sinNh;
 	}
 
-	public static List<Term> substituteLowerInHigher(List<Term> termList1, List<Term> termList2){
+	public static List<Term> substituteLowerInHigher(List<Term> termList1, List<Term> termList2) {
 			
 	    	List<Term> productTerms = new ArrayList<Term>();
 	    	
@@ -117,7 +119,7 @@ public class WaveletFactory {
 	    	
 	    	
 	    	for(Term term2:termList2){	    	
-	    	    for(Term term1:termList1){
+	    	    for(Term term1:termList1){	
 	    	  	
 	    		 	productTerms.add(multiplyWithSubstitution(term1,term2));
 	    	  	}
@@ -237,6 +239,7 @@ public class WaveletFactory {
 			
 			BigDecimal valueInverse = inverse(value1);
 			prod=prod.multiply(valueInverse);
+			//prod = normalize(prod);
 			//prod = prod.divide(value1,Term.precision,RoundingMode.CEILING);
 			term.setLlist(new ArrayList<BigDecimal>());
 					
@@ -274,6 +277,43 @@ public class WaveletFactory {
 		return list;
 	 }
 	 
+	public static BigDecimal normalize(BigDecimal prod) {
+         return prod;
+		/*
+          String a = prod.toEngineeringString();
+
+		if (a.contains(".") && a.contains("E")) {
+			//System.out.println("a is:"+a);
+
+			Pattern pattern = Pattern.compile("^(.+?)\\.(.+?)E(.+?)$");
+			Matcher matcher = pattern.matcher(a);
+			matcher.find();
+
+			String a1 = matcher.group(1);
+			String a2 = matcher.group(2);
+			String a3 = matcher.group(3);
+
+			String p = a1 + "." + trim(a2) + "E" + a3;
+			//System.out.println("p is:"+p);
+			BigDecimal pp = new BigDecimal(p);
+			return pp;
+		}
+
+		return prod;
+		*/
+	}
+
+	private static String trim(String a2) {
+
+		if (a2.length() > 50) {
+		return a2.substring(0, 49);
+		}
+
+		return a2;
+	}
+	
+	
+
 	private static BigDecimal inverse(BigDecimal value1) {
 		BigDecimal value = null;
 		long power = 0;
@@ -289,6 +329,8 @@ public class WaveletFactory {
 		a =a.replaceAll("\\.", "");
 		b = a.substring(0,1) + "." + a.substring(1);
 		}
+		
+		
 		
 		value = new BigDecimal(b);
 		value = new BigDecimal("1").divide(value,Term.precision,RoundingMode.CEILING);
@@ -322,8 +364,11 @@ public class WaveletFactory {
 		//termListMap.put("a0", fetchOnlyRelevent(lMap.get("sin1")));
 		//termListMap.put("a1", fetchOnlyRelevent(lMap.get("sin40")));
 		
-		termListMap.put("a2", Harmonics.generateHarmonics(1, fetchOnlyRelevent(lMap.get("sin2"))));
-		termListMap.put("a20",Harmonics.generateHarmonics(1, fetchOnlyRelevent(lMap.get("sin20"))));
+		termListMap.put("a5",  Harmonics.generateHarmonics(1,fetchOnlyRelevent(lMap.get("sin5"))));
+		termListMap.put("a8",  Harmonics.generateHarmonics(1,fetchOnlyRelevent(lMap.get("sin8"))));
+		termListMap.put("a10", Harmonics.generateHarmonics(1,fetchOnlyRelevent(lMap.get("sin10"))));
+		termListMap.put("a15", Harmonics.generateHarmonics(1,fetchOnlyRelevent(lMap.get("sin15"))));
+		termListMap.put("a20", Harmonics.generateHarmonics(1,fetchOnlyRelevent(lMap.get("sin20"))));
 	}
 
 	public void createAllWaveletsMap() {

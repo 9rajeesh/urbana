@@ -10,7 +10,7 @@ import org.urbana.java.criteria.generator.WaveletFactory;
 public class Term implements Comparable<Term> {
 
 	
-	public static int  precision = 5;
+	public static int  precision = 3;
 	private BigDecimal sine;
 	private BigDecimal cosine;
 	private Integer npower ;

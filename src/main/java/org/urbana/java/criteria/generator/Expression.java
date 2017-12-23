@@ -7,8 +7,6 @@ public class Expression {
 
 	
 	private List<String> varList = new ArrayList<String>();
-
-	
 	
 	public List<String> getVarList() {
 		return varList;
